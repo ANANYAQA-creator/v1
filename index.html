@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Valentine ❤️</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.4em;
+            margin-top: 25px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            50% { transform: scale(1.05); }
+        }
+
+        /* ❤️ Floating hearts */
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            font-size: 20px;
+            animation: floatUp 6s linear forwards;
+            pointer-events: none;
+        }
+        @keyframes floatUp {
+            to {
+                transform: translateY(-110vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* 💕 Images */
+        .images {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .images img {
+            width: 320px;
+            height: 420px; /* lambi images */
+            object-fit: cover;
+            border-radius: 15px;
+            border: 4px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: 0.4s;
+        }
+
+        .images img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 30px rgba(255,75,92,0.6);
+        }
+
+        /* Buttons */
+        .buttons {
+            position: relative;
+            height: 140px;
+        }
+
+        button {
+            font-size: 1.2em;
+            padding: 10px 25px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+        }
+
+        #yes {
+            background: #ff4b5c;
+            color: white;
+            left: 50%;
+            transform: translateX(-130%);
+        }
+
+        #no {
+            background: #eee;
+            left: 50%;
+            transform: translateX(30%);
+        }
+
+        /* 💌 POPUP common */
+        .popup {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .popup-content {
+            background: white;
+            width: 320px;
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        /* 📱 WhatsApp chat */
+        .chat {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .bubble {
+            max-width: 80%;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.95em;
+            animation: slideIn 0.4s ease;
+        }
+
+        .me {
+            background: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .her {
+            background: #f1f0f0;
+            align-self: flex-start;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 😈 NO popup */
+        .no-message {
+            font-size: 1.05em;
+            color: #ff4b5c;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Will you be my Valentine? ❤️</h1>
+
+<div class="images">
+    <img src="/images/your_photo.jpg">
+    <img src="/images/girlfriend_photo.jpg">
+</div>
+
+<div class="buttons">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+</div>
+
+<!-- 💌 YES POPUP -->
+<div class="popup" id="yesPopup">
+    <div class="popup-content">
+        <div class="chat" id="chat"></div>
+    </div>
+</div>
+
+<!-- 😈 NO POPUP -->
+<div class="popup" id="noPopup">
+    <div class="popup-content">
+        <div class="no-message">
+            iska koi option nahi hain apke paas 😜 <br>
+            aapko "Yes" par hi click karna padega ❤️
+        </div>
+    </div>
+</div>
+
+<script>
+    /* ❤️ Hearts */
+    setInterval(() => {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "❤️";
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.fontSize = 18 + Math.random() * 20 + "px";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 6000);
+    }, 400);
+
+    /* 😈 NO button runaway + popup 3.5s */
+    const noBtn = document.getElementById("no");
+    const noPopup = document.getElementById("noPopup");
+    let noTimer;
+
+    function moveNo() {
+        noBtn.style.left = Math.random() * 80 + "vw";
+        noBtn.style.top = Math.random() * 80 + "vh";
+    }
+
+    ["mouseenter", "click", "touchstart"].forEach(evt => {
+        noBtn.addEventListener(evt, e => {
+            e.preventDefault();
+            moveNo();
+            noPopup.style.display = "flex";
+
+            clearTimeout(noTimer);
+            noTimer = setTimeout(() => {
+                noPopup.style.display = "none"; // 3.5s
+            }, 3500);
+        });
+    });
+
+    /* 💌 YES popup chat + auto close 3s */
+    const yesBtn = document.getElementById("yes");
+    const yesPopup = document.getElementById("yesPopup");
+    const chat = document.getElementById("chat");
+
+    yesBtn.onclick = () => {
+        yesPopup.style.display = "flex";
+        chat.innerHTML = "";
+
+        const messages = [
+            { text: "Hi Sweety ❤️", cls: "me" },
+            { text: "Happy Valentine's Day Dear Sweety💕", cls: "me" },
+            { text: "Love youhh Always Dear🥰", cls: "me" },
+            { text: "My Forever Endever Valentine ❤️", cls: "me" }
+        ];
+
+        messages.forEach((msg, i) => {
+            setTimeout(() => {
+                const div = document.createElement("div");
+                div.className = `bubble ${msg.cls}`;
+                div.innerText = msg.text;
+                chat.appendChild(div);
+            }, i * 800);
+        });
+
+        // ✅ Auto-close YES popup after 3 seconds
+        setTimeout(() => {
+            yesPopup.style.display = "none";
+        }, 3000);
+    };
+</script>
+
+</body>
+</html>
