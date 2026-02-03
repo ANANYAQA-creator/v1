@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For My Love ❤️</title>
+<title>❤️For My Lovely Sweety❤️</title>
 
 <style>
 
@@ -86,16 +86,17 @@ button{
     display:none;
     align-items:center;
     justify-content:center;
+    padding:20px;
 }
 
-/* Envelope */
+/* Envelope - resized to fit letter perfectly */
 .envelope{
-    width:420px;
-    height:260px;
+    width:min(700px, 92vw);
+    height:auto;
+    min-height:420px;
     background:#ff4b5c;
     position:relative;
-    border-radius:8px;
-    cursor:pointer;
+    border-radius:10px;
     animation:pop .6s ease;
 }
 
@@ -110,10 +111,10 @@ button{
     position:absolute;
     width:0;
     height:0;
-    border-left:210px solid transparent;
-    border-right:210px solid transparent;
-    border-bottom:130px solid #ff758c;
-    top:-130px;
+    border-left:calc(50% + 5px) solid transparent;
+    border-right:calc(50% + 5px) solid transparent;
+    border-bottom:180px solid #ff758c;
+    top:-180px;
     left:0;
     transform-origin:bottom;
     transition:.8s;
@@ -126,38 +127,33 @@ button{
 /* letter */
 .letter{
     position:absolute;
-    width:90%;
-    height:90%;
+    width:94%;
+    height:auto;
+    min-height:360px;
     background:#fffdf7;
-    top:5%;
-    left:5%;
-    border-radius:6px;
-    padding:25px;
+    top:3%;
+    left:3%;
+    border-radius:8px;
+    padding:40px;
     box-sizing:border-box;
     transform:translateY(40px);
     opacity:0;
     transition:.8s;
-    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .envelope.open .letter{
-    transform:translateY(-120px);
+    transform:translateY(-140px);
     opacity:1;
 }
 
-#typeText{
-    font-size:1.25em;
-    line-height:1.7em;
+.letter p{
+    font-size:1.45em;
+    line-height:1.9em;
     color:#444;
-    white-space:pre-line;
-}
-
-/* Fireworks canvas */
-canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    pointer-events:none;
+    max-width:600px;
 }
 
 .no-message{
@@ -168,14 +164,34 @@ canvas{
     color:#ff4b5c;
 }
 
+/* Mobile optimization */
+@media(max-width:600px){
+
+h1{
+    font-size:2.2em;
+}
+
+.images img{
+    width:220px;
+    height:300px;
+}
+
+.letter{
+    padding:25px;
+}
+
+.letter p{
+    font-size:1.15em;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<canvas id="fireworks"></canvas>
-
-<h1>Will You Be My Valentine? ❤️</h1>
+<h1>Sweety, Will You Be My Valentine? 😍❤️</h1>
 
 <div class="images">
     <img src="your_photo.jpg">
@@ -191,7 +207,7 @@ canvas{
 <div class="popup" id="popup">
     <div class="envelope" id="envelope">
         <div class="letter">
-            <div id="typeText"></div>
+            <p id="loveLetter"></p>
         </div>
     </div>
 </div>
@@ -199,8 +215,8 @@ canvas{
 <!-- NO popup -->
 <div class="popup" id="noPopup">
     <div class="no-message">
-        Iska koi option nahi hain apke paas 😜 <br>
-        Aapko "YES" par hi click karna padega ❤️
+        😜Iska koi option nahi hain apke paas 😜 <br>
+        ❤️Aapko "YES" par hi click karna padega ❤️
     </div>
 </div>
 
@@ -209,7 +225,15 @@ canvas{
 /* CHANGE NAME HERE */
 const loverName = "Swati";
 
-const message = `Dear ${loverName} ❤️,\n\nFrom the moment you walked into my life, everything became more beautiful.\n\nYou are not just my love — you are my peace, my happiness, and my forever home.\n\nI promise to stand beside you, laugh with you, support you, and love you more with every passing day.\n\nHappy Valentine's Day 💕\n\nForever Yours ❤️`;
+const message = `Dear ${loverName} ❤️, From the moment you came into my life,
+everything started feeling brighter, softer, and more beautiful. 
+You are not just my love❤️— you are my peace, my happiness😊, and the most precious part of my world🌍.
+With you, even ordinary days feel magical✨, and every moment becomes a memory I want to keep forever😉🤞🏻.
+I promise to stand beside you, support you🤝🏻, make you smile when you are low,
+celebrate every success with you🤩🥳, and love you more deeply with each passing day.
+You are my today, my tomorrow, and my forever❤️ .
+Happy Valentine's Day, my love Swati❤️ 
+Forever Yours Idiot One🥰.`;
 
 
 /* hearts */
@@ -223,42 +247,27 @@ setInterval(()=>{
 },400);
 
 
-/* YES */
+/* YES -> auto open envelope + show full letter */
 const yes=document.getElementById("yes");
 const popup=document.getElementById("popup");
 const envelope=document.getElementById("envelope");
-const text=document.getElementById("typeText");
+const letter=document.getElementById("loveLetter");
+
+letter.innerText = message;
 
 yes.onclick=()=>{
     popup.style.display="flex";
-    startFireworks();
-};
 
-/* open envelope */
-envelope.onclick=()=>{
-    envelope.classList.add("open");
-    typeWriter(message, text, 35);
+    setTimeout(()=>{
+        envelope.classList.add("open");
+    },200);
 
+    // auto close after 10 seconds
     setTimeout(()=>{
         popup.style.display="none";
         envelope.classList.remove("open");
-        text.innerHTML="";
-    },8000);
+    },10000);
 };
-
-
-/* typewriter */
-function typeWriter(str, el, speed){
-    let i=0;
-    function typing(){
-        if(i<str.length){
-            el.innerHTML+=str.charAt(i);
-            i++;
-            setTimeout(typing, speed);
-        }
-    }
-    typing();
-}
 
 
 /* runaway NO */
@@ -278,50 +287,6 @@ function moveNo(){
         setTimeout(()=>noPopup.style.display="none",3000);
     });
 });
-
-
-/* FIREWORKS */
-const canvas=document.getElementById("fireworks");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let particles=[];
-
-function startFireworks(){
-    for(let i=0;i<120;i++){
-        particles.push({
-            x:canvas.width/2,
-            y:canvas.height/2,
-            angle:Math.random()*2*Math.PI,
-            speed:Math.random()*5+2,
-            radius:Math.random()*2+1,
-            life:100
-        });
-    }
-    animateFireworks();
-}
-
-function animateFireworks(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    particles.forEach(p=>{
-        p.x+=Math.cos(p.angle)*p.speed;
-        p.y+=Math.sin(p.angle)*p.speed;
-        p.life--;
-
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
-        ctx.fillStyle=`hsl(${Math.random()*360},100%,70%)`;
-        ctx.fill();
-    });
-
-    particles=particles.filter(p=>p.life>0);
-
-    if(particles.length>0){
-        requestAnimationFrame(animateFireworks);
-    }
-}
 
 </script>
 
