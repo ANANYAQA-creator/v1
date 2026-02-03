@@ -1,282 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Valentine ❤️</title>
+<meta charset="UTF-8">
+<title>For My Love ❤️</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+<style>
 
-        h1 {
-            color: #fff;
-            font-size: 3.6em;
-            margin-top: 25px;
-            animation: pulse 2s infinite;
-        }
+body{
+    margin:0;
+    overflow:hidden;
+    font-family:'Georgia', serif;
+    background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+    text-align:center;
+}
 
-        @keyframes pulse {
-            50% { transform: scale(1.05); }
-        }
+h1{
+    color:white;
+    margin-top:30px;
+    font-size:3.5em;
+}
 
-        /* ❤️ Floating hearts */
-        .heart {
-            position: fixed;
-            bottom: -40px;
-            font-size: 40px;
-            animation: floatUp 6s linear forwards;
-            pointer-events: none;
-        }
-        @keyframes floatUp {
-            to {
-                transform: translateY(-110vh) scale(1.5);
-                opacity: 0;
-            }
-        }
+/* Floating hearts */
+.heart{
+    position:fixed;
+    bottom:-40px;
+    font-size:30px;
+    animation:floatUp 6s linear forwards;
+}
 
-        /* 💕 Images */
-        .images {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 30px 0;
-            flex-wrap: wrap;
-        }
+@keyframes floatUp{
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
 
-        .images img {
-            width: 340px;
-            height: 450px; /* ✅ aur lambi */
-            object-fit: cover;
-            border-radius: 15px;
-            border: 4px solid white;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            transition: 0.4s;
-        }
+.images{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin:30px;
+    flex-wrap:wrap;
+}
 
-        .images img:hover {
-            transform: scale(1.08);
-            box-shadow: 0 15px 30px rgba(255,75,92,0.6);
-        }
+.images img{
+    width:300px;
+    height:420px;
+    object-fit:cover;
+    border-radius:15px;
+    border:4px solid white;
+}
 
-        /* Buttons */
-        .buttons {
-            position: relative;
-            height: 140px;
-        }
+.buttons{
+    position:relative;
+    height:140px;
+}
 
-        button {
-            font-size: 1.3em; /* ✅ slightly bigger */
-            padding: 12px 28px; /* ✅ thoda bada */
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            position: absolute;
-        }
+button{
+    font-size:1.3em;
+    padding:12px 26px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    position:absolute;
+}
 
-        #yes {
-            background: #ff4b5c;
-            color: white;
-            left: 50%;
-            transform: translateX(-130%);
-        }
+#yes{
+    background:#ff4b5c;
+    color:white;
+    left:50%;
+    transform:translateX(-130%);
+}
 
-        #no {
-            background: #eee;
-            left: 50%;
-            transform: translateX(30%);
-        }
+#no{
+    background:#eee;
+    left:50%;
+    transform:translateX(30%);
+}
 
-        /* 💌 POPUP common */
-        .popup {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
+/* POPUP */
+.popup{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
 
-        .popup-content {
-            background: white;
-            width: 380px; /* ✅ thoda wider */
-            border-radius: 15px;
-            padding: 25px; /* ✅ padding bada */
-        }
+/* Envelope */
+.envelope{
+    width:420px;
+    height:260px;
+    background:#ff4b5c;
+    position:relative;
+    border-radius:8px;
+    cursor:pointer;
+    animation:pop .6s ease;
+}
 
-        /* 📱 WhatsApp chat */
-        .chat {
-            display: flex;
-            flex-direction: column;
-            gap: 12px; /* ✅ gap bada */
-            font-size: 1.5em; /* ✅ YES messages aur bada */
-        }
+@keyframes pop{
+    from{transform:scale(.5);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
 
-        .bubble {
-            max-width: 80%;
-            padding: 14px 18px; /* ✅ aur padding bada */
-            border-radius: 18px;
-            font-size: 1.5em; /* ✅ YES message aur bada */
-            animation: slideIn 0.4s ease;
-        }
+/* flap */
+.envelope:before{
+    content:"";
+    position:absolute;
+    width:0;
+    height:0;
+    border-left:210px solid transparent;
+    border-right:210px solid transparent;
+    border-bottom:130px solid #ff758c;
+    top:-130px;
+    left:0;
+    transform-origin:bottom;
+    transition:.8s;
+}
 
-        .me {
-            background: #dcf8c6;
-            align-self: flex-end;
-        }
+.envelope.open:before{
+    transform:rotateX(180deg);
+}
 
-        .her {
-            background: #f1f0f0;
-            align-self: flex-start;
-        }
+/* letter */
+.letter{
+    position:absolute;
+    width:90%;
+    height:90%;
+    background:#fffdf7;
+    top:5%;
+    left:5%;
+    border-radius:6px;
+    padding:25px;
+    box-sizing:border-box;
+    transform:translateY(40px);
+    opacity:0;
+    transition:.8s;
+    overflow:hidden;
+}
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+.envelope.open .letter{
+    transform:translateY(-120px);
+    opacity:1;
+}
 
-        /* 😈 NO popup */
-        .no-message {
-            font-size: 1.6em; /* ✅ NO popup aur bada */
-            color: #ff4b5c;
-            padding: 20px; /* ✅ padding bada */
-            line-height: 1.5em;
-        }
+#typeText{
+    font-size:1.25em;
+    line-height:1.7em;
+    color:#444;
+    white-space:pre-line;
+}
 
-        /* Responsive adjustments for phone */
-        @media(max-width: 480px){
-            .images img {
-                width: 240px;
-                height: 340px;
-            }
+/* Fireworks canvas */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    pointer-events:none;
+}
 
-            button {
-                font-size: 1.2em;
-                padding: 10px 22px;
-            }
+.no-message{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    font-size:1.5em;
+    color:#ff4b5c;
+}
 
-            .popup-content {
-                width: 300px;
-                padding: 20px;
-            }
-
-            .bubble {
-                font-size: 1.3em;
-                padding: 12px 14px;
-            }
-
-            .no-message {
-                font-size: 1.4em;
-            }
-        }
-    </style>
+</style>
 </head>
 
 <body>
 
-<h1>Will you be my Valentine? ❤️</h1>
+<canvas id="fireworks"></canvas>
+
+<h1>Will You Be My Valentine? ❤️</h1>
 
 <div class="images">
-    <img src="your_photo.jpg" alt="Me">
-    <img src="girlfriend_photo.jpg" alt="You">
+    <img src="your_photo.jpg">
+    <img src="girlfriend_photo.jpg">
 </div>
 
 <div class="buttons">
-    <button id="yes">Yes</button>
-    <button id="no">No</button>
+    <button id="yes">YES</button>
+    <button id="no">NO</button>
 </div>
 
-<!-- 💌 YES POPUP -->
-<div class="popup" id="yesPopup">
-    <div class="popup-content">
-        <div class="chat" id="chat"></div>
-    </div>
-</div>
-
-<!-- 😈 NO POPUP -->
-<div class="popup" id="noPopup">
-    <div class="popup-content">
-        <div class="no-message">
-            iska koi option nahi hain apke paas 😜 <br>
-            aapko "Yes" par hi click karna padega ❤️
+<!-- Envelope Popup -->
+<div class="popup" id="popup">
+    <div class="envelope" id="envelope">
+        <div class="letter">
+            <div id="typeText"></div>
         </div>
     </div>
 </div>
 
+<!-- NO popup -->
+<div class="popup" id="noPopup">
+    <div class="no-message">
+        Iska koi option nahi hain apke paas 😜 <br>
+        Aapko "YES" par hi click karna padega ❤️
+    </div>
+</div>
+
 <script>
-    /* ❤️ Hearts */
-    setInterval(() => {
-        const h = document.createElement("div");
-        h.className = "heart";
-        h.innerHTML = "❤️";
-        h.style.left = Math.random() * 100 + "vw";
-        h.style.fontSize = 20 + Math.random() * 22 + "px";
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 6000);
-    }, 400);
 
-    /* 😈 NO button runaway + popup 3.5s */
-    const noBtn = document.getElementById("no");
-    const noPopup = document.getElementById("noPopup");
-    let noTimer;
+/* CHANGE NAME HERE */
+const loverName = "Swati";
 
-    function moveNo() {
-        noBtn.style.left = Math.random() * 80 + "vw";
-        noBtn.style.top = Math.random() * 80 + "vh";
+const message = `Dear ${loverName} ❤️,\n\nFrom the moment you walked into my life, everything became more beautiful.\n\nYou are not just my love — you are my peace, my happiness, and my forever home.\n\nI promise to stand beside you, laugh with you, support you, and love you more with every passing day.\n\nHappy Valentine's Day 💕\n\nForever Yours ❤️`;
+
+
+/* hearts */
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},400);
+
+
+/* YES */
+const yes=document.getElementById("yes");
+const popup=document.getElementById("popup");
+const envelope=document.getElementById("envelope");
+const text=document.getElementById("typeText");
+
+yes.onclick=()=>{
+    popup.style.display="flex";
+    startFireworks();
+};
+
+/* open envelope */
+envelope.onclick=()=>{
+    envelope.classList.add("open");
+    typeWriter(message, text, 35);
+
+    setTimeout(()=>{
+        popup.style.display="none";
+        envelope.classList.remove("open");
+        text.innerHTML="";
+    },8000);
+};
+
+
+/* typewriter */
+function typeWriter(str, el, speed){
+    let i=0;
+    function typing(){
+        if(i<str.length){
+            el.innerHTML+=str.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        }
     }
+    typing();
+}
 
-    ["mouseenter", "click", "touchstart"].forEach(evt => {
-        noBtn.addEventListener(evt, e => {
-            e.preventDefault();
-            moveNo();
-            noPopup.style.display = "flex";
 
-            clearTimeout(noTimer);
-            noTimer = setTimeout(() => {
-                noPopup.style.display = "none"; // 3.5s
-            }, 3500);
+/* runaway NO */
+const no=document.getElementById("no");
+const noPopup=document.getElementById("noPopup");
+
+function moveNo(){
+    no.style.left=Math.random()*80+"vw";
+    no.style.top=Math.random()*80+"vh";
+}
+
+["mouseenter","click","touchstart"].forEach(evt=>{
+    no.addEventListener(evt,e=>{
+        e.preventDefault();
+        moveNo();
+        noPopup.style.display="flex";
+        setTimeout(()=>noPopup.style.display="none",3000);
+    });
+});
+
+
+/* FIREWORKS */
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+function startFireworks(){
+    for(let i=0;i<120;i++){
+        particles.push({
+            x:canvas.width/2,
+            y:canvas.height/2,
+            angle:Math.random()*2*Math.PI,
+            speed:Math.random()*5+2,
+            radius:Math.random()*2+1,
+            life:100
         });
+    }
+    animateFireworks();
+}
+
+function animateFireworks(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    particles.forEach(p=>{
+        p.x+=Math.cos(p.angle)*p.speed;
+        p.y+=Math.sin(p.angle)*p.speed;
+        p.life--;
+
+        ctx.beginPath();
+        ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
+        ctx.fillStyle=`hsl(${Math.random()*360},100%,70%)`;
+        ctx.fill();
     });
 
-    /* 💌 YES popup chat + auto close 3s */
-    const yesBtn = document.getElementById("yes");
-    const yesPopup = document.getElementById("yesPopup");
-    const chat = document.getElementById("chat");
+    particles=particles.filter(p=>p.life>0);
 
-    yesBtn.onclick = () => {
-        yesPopup.style.display = "flex";
-        chat.innerHTML = "";
+    if(particles.length>0){
+        requestAnimationFrame(animateFireworks);
+    }
+}
 
-        const messages = [
-            { text: "Hi Sweety ❤️", cls: "me" },
-            { text: "Happy Valentine's Day Dear Sweety💕", cls: "me" },
-            { text: "Love youhh Always Dear🥰", cls: "me" },
-            { text: "My Forever Endever Valentine ❤️", cls: "me" }
-        ];
-
-        messages.forEach((msg, i) => {
-            setTimeout(() => {
-                const div = document.createElement("div");
-                div.className = `bubble ${msg.cls}`;
-                div.innerText = msg.text;
-                chat.appendChild(div);
-            }, i * 800);
-        });
-
-        // ✅ Auto-close YES popup after 3 seconds
-        setTimeout(() => {
-            yesPopup.style.display = "none";
-        },8000);
-    };
 </script>
 
 </body>
 </html>
-
-
